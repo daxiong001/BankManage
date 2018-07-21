@@ -31,7 +31,30 @@ public class dbConnection {
         return conn;
     }
 
-   public void close(ResultSet rs, PreparedStatement pst,Connection conn){
+    public static int addUpdDel(String sql){
+        int i = 0;
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+        } catch (SQLException e) {
+            System.out.println("数据库增删改异常");
+            e.printStackTrace();
+        }
+        return i;
+    }
+
+    public static ResultSet selectSql(String sql){
+        ResultSet rs = null;
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+             rs = ps.executeQuery();
+        } catch (SQLException e) {
+            System.out.println("数据库查询异常");
+            e.printStackTrace();
+        }
+        return rs;
+    }
+
+   public static void close(ResultSet rs, PreparedStatement pst,Connection conn){
         if (rs!=null){
             try {
                 rs.close();
@@ -55,7 +78,7 @@ public class dbConnection {
         }
    }
 
-   public void close(PreparedStatement pst,Connection conn){
+   public static void close(PreparedStatement pst,Connection conn){
         if (pst!=null){
             try {
                 pst.close();
@@ -72,7 +95,7 @@ public class dbConnection {
         }
    }
 
-   public void close(Connection conn){
+   public static void close(Connection conn){
         if (conn!=null){
             try {
                 conn.close();
